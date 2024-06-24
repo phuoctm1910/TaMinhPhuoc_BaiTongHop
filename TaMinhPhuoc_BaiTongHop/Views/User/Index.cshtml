@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Danh Sách Người Dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a asp-action="Create" class="btn btn-outline-primary">Thêm Người Dùng</a>
+
+<div class="container mt-5" ng-app="userApp" ng-controller="userController">
+    <h2>Danh sách người dùng</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Họ Tên</th>
+                <th>Số Điện Thoại</th>
+                <th>Ngày Sinh</th>
+                <th>Giới Tính</th>
+                <th>Địa Chỉ</th>
+                <th>Tên Đăng Nhập</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{ user.fullName }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td>{{ user.birthDate | date:'dd/MM/yyyy' }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.address }}</td>
+                <td>{{ user.username }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var app = angular.module('userApp', []);
+
+        app.controller('userController', function ($scope, $http) {
+            $scope.users = [];
+
+            $http.get('/User/List').then(function (response) {
+                $scope.users = response.data;
+            }, function (error) {
+                console.error('Lỗi khi lấy dữ liệu người dùng:', error);
+            });
+        });
+    </script>
+}
