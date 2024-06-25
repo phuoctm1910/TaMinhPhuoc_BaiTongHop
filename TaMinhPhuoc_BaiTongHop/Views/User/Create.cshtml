@@ -4,7 +4,6 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="container mt-5" ng-app="registrationApp" ng-controller="registrationController">
     <div class="row">
         <div class="col-md-6 m-auto">
@@ -14,22 +13,22 @@
             <form name="registrationForm" novalidate>
                 <div class="mb-3 position-relative">
                     <label>Họ và tên:</label>
-                    <input type="text" name="fullName" ng-model="user.fullName" required ng-keyup="validateField('fullName')" class="form-control" id="fullName" />
+                    <input type="text" name="fullName" placeholder="Nhập họ và tên" ng-model="user.fullName" required ng-keyup="validateField('fullName')" class="form-control" id="fullName" ng-class="{'border border-danger': tooltips.fullName, 'border border-success': !tooltips.fullName && registrationForm.fullName.$dirty}" />
                     <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.fullName}" id="fullNameTooltip">Họ tên là bắt buộc.</div>
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Số Điện Thoại:</label>
-                    <input type="text" name="phoneNumber" ng-model="user.phoneNumber" required ng-keyup="validateField('phoneNumber')" ng-pattern="/^(09|03|07|08|01)\d{8}$/" class="form-control" id="phoneNumber" />
+                    <input type="text" name="phoneNumber" placeholder="Nhập số điện thoại" ng-model="user.phoneNumber" required ng-keyup="validateField('phoneNumber')" ng-pattern="/^(09|03|07|08|01)\d{8}$/" class="form-control" id="phoneNumber" ng-class="{'border border-danger': tooltips.phoneNumber, 'border border-success': !tooltips.phoneNumber && registrationForm.phoneNumber.$dirty}" />
                     <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.phoneNumber}" id="phoneNumberTooltip">Số điện thoại là bắt buộc gồm 10 số và bắt đầu với các số (09|03|07|08|01).</div>
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Ngày Sinh:</label>
-                    <input type="date" name="birthDate" ng-model="user.birthDate" required ng-change="validateField('birthDate')" class="form-control" id="birthDate" />
-                    <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.birthDate}" id="birthDateTooltip">Ngày sinh là bắt buộc.</div>
+                    <input type="date" name="birthDate" placeholder="Nhập ngày sinh" ng-model="user.birthDate" required ng-change="validateField('birthDate')" class="form-control" id="birthDate" ng-class="{'border border-danger': tooltips.birthDate, 'border border-success': !tooltips.birthDate && registrationForm.birthDate.$dirty}" />
+                    <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.birthDate}" id="birthDateTooltip">Ngày sinh không hợp lệ hoặc phải ít nhất 6 tuổi.</div>
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Giới Tính:</label>
-                    <select name="gender" ng-model="user.gender" required ng-change="validateField('gender')" class="form-control" id="gender">
+                    <select name="gender" ng-model="user.gender" required ng-change="validateField('gender')" class="form-control" id="gender" ng-class="getClass('gender')">
                         <option value="" disabled selected>Chọn giới tính</option>
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
@@ -38,7 +37,7 @@
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Địa chỉ:</label>
-                    <select name="address" ng-model="user.address" required ng-change="validateField('address')" class="form-control" id="address">
+                    <select name="address" ng-model="user.address" required ng-change="validateField('address')" class="form-control" id="address" ng-class="getClass('address')">
                         <option value="" disabled selected>Chọn tỉnh thành</option>
                         <option value="Hà Nội">Hà Nội</option>
                         <option value="TP.Hồ Chí Minh">TP.Hồ Chí Minh</option>
@@ -51,22 +50,21 @@
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Username:</label>
-                    <input type="text" name="username" ng-model="user.username" required ng-keyup="validateField('username')" class="form-control" id="username" />
+                    <input type="text" name="username" placeholder="Nhập tên tài khoản" ng-model="user.username" required ng-keyup="validateField('username')" ng-pattern="/^[a-z0-9]+$/" class="form-control" id="username" ng-class="{'border border-danger': tooltips.username, 'border border-success': !tooltips.username && registrationForm.username.$dirty}" />
                     <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.username}" id="usernameTooltip">Tên đăng nhập là bắt buộc.</div>
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Password:</label>
-                    <input type="password" name="password" ng-model="user.password" required ng-pattern="/^(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$/" ng-keyup="validateField('password')" class="form-control" id="password" />
-                    <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.password}" id="passwordTooltip">Mật khẩu phải chứa ít nhất 1 ký tự thường, 1 ký tự số và 1 ký tự đặc biệt.</div>
+                    <input type="password" name="password" placeholder="Nhập mật khẩu" ng-model="user.password" required ng-pattern="/^(?=.*[a-z])(?=.*\d)(?=.*[^a-zA-Z0-9\s])[^\s]{6,}$/" ng-keyup="validateField('password')" class="form-control" id="password" ng-class="{'border border-danger': tooltips.password, 'border border-success': !tooltips.password && registrationForm.password.$dirty}" />
+                    <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.password}" id="passwordTooltip">Mật khẩu phải chứa ít nhất 1 ký tự thường, 1 ký tự số và 1 ký tự đặc biệt, không được chứa khoảng trắng.</div>
                 </div>
                 <div class="mb-3 position-relative">
                     <label>Nhập lại Password:</label>
-                    <input type="password" name="repassword" ng-model="user.repassword" required compare-to="user.password" ng-keyup="validateField('repassword')" class="form-control" id="repassword" />
+                    <input type="password" name="repassword" placeholder="Nhập lại mật khẩu" ng-model="user.repassword" required compare-to="user.password" ng-keyup="validateField('repassword')" class="form-control" id="repassword" ng-class="{'border border-danger': tooltips.repassword, 'border border-success': !tooltips.repassword && registrationForm.repassword.$dirty}" />
                     <div class="custom-tooltip" ng-class="{'tooltip-hidden': !tooltips.repassword}" id="repasswordTooltip">Mật khẩu xác nhận không khớp.</div>
                 </div>
                 <button type="button" class="btn btn-primary" ng-click="registerUser()">Đăng Ký</button>
-            </form>
-        </div>
+            </form>        </div>
     </div>
 </div>
 
@@ -78,14 +76,14 @@
         app.controller('registrationController', function ($scope, $http, $window) {
             $scope.user = {};
             $scope.tooltips = {
-                fullName: true,
-                phoneNumber: true,
-                birthDate: true,
-                gender: true,
-                address: true,
-                username: true,
-                password: true,
-                repassword: true
+                fullName: false,
+                phoneNumber: false,
+                birthDate: false,
+                gender: false,
+                address: false,
+                username: false,
+                password: false,
+                repassword: false
             };
 
             $scope.registerUser = function () {
@@ -96,14 +94,14 @@
                         $scope.registrationForm.$setPristine();
                         $scope.registrationForm.$setUntouched();
                         $scope.tooltips = {
-                            fullName: true,
-                            phoneNumber: true,
-                            birthDate: true,
-                            gender: true,
-                            address: true,
-                            username: true,
-                            password: true,
-                            repassword: true
+                            fullName: false,
+                            phoneNumber: false,
+                            birthDate: false,
+                            gender: false,
+                            address: false,
+                            username: false,
+                            password: false,
+                            repassword: false
                         };
                         $window.location.href = '/user/index';
                     }, function (error) {
@@ -118,12 +116,43 @@
 
             $scope.validateField = function (fieldName) {
                 var field = $scope.registrationForm[fieldName];
-                if (field) {
+                if (fieldName === 'birthDate') {
+                    $scope.tooltips.birthDate = !validateBirthDate($scope.user.birthDate);
+                } else if (fieldName === 'gender' || fieldName === 'address') {
+                    $scope.tooltips[fieldName] = $scope.user[fieldName] === '';
+                } else if (field) {
                     $scope.tooltips[fieldName] = field.$invalid && field.$dirty;
                 } else {
                     console.error('Field not found:', fieldName);
                 }
             };
+
+            $scope.getClass = function (fieldName) {
+                var field = $scope.registrationForm[fieldName];
+                if (fieldName === 'gender' || fieldName === 'address') {
+                    if ($scope.user[fieldName] === undefined) {
+                        return '';
+                    }
+                    return $scope.user[fieldName] === '' ? 'border border-danger' : 'border border-success';
+                }
+                return field && field.$dirty ? (field.$invalid ? 'border border-danger' : 'border border-success') : '';
+            };
+
+            function validateBirthDate(inputDate) {
+                const currentDate = new Date();
+                const userDate = new Date(inputDate);
+
+                if (isNaN(userDate) || userDate > currentDate) {
+                    return false;
+                }
+                const minAgeDate = new Date();
+                minAgeDate.setFullYear(minAgeDate.getFullYear() - 6);
+
+                if (userDate > minAgeDate) {
+                    return false;
+                }
+                return true;
+            }
         });
 
         app.directive('compareTo', function () {
