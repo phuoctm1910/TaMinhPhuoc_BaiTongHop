@@ -6,32 +6,20 @@
     <title>@ViewData["Title"] - TaMinhPhuoc_BaiTongHop</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/b4d3d14cb1.js" crossorigin="anonymous"></script>
     <style>
-        .custom-tooltip {
+        .tooltip-block {
             position: absolute;
-            background-color: indianred;
-            top: -10px;
-            left: 300px;
-            color: white;
+            top: -3px;
+            left: 70px;
+            color: indianred;
             padding: 5px;
-            border-radius: 5px;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             white-space: nowrap;
-            z-index: 1000;
-            transform: translateX(-50%);
         }
-
-            .custom-tooltip::after {
-                content: "";
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                margin-left: -5px;
-                border-width: 5px;
-                border-style: solid;
-                border-color: indianred transparent transparent transparent;
-            }
+        .custom-tooltip {
+        }
 
         .position-relative {
             position: relative;
@@ -40,6 +28,8 @@
         .tooltip-hidden {
             display: none;
         }
+
+        input:
     </style>
 </head>
 <body>

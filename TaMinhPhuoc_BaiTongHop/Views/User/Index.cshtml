@@ -37,11 +37,12 @@
         var app = angular.module('userApp', []);
 
         app.controller('userController', function ($scope, $http) {
-            $scope.users = [];
+            $scope.users = []; // Tạo mảng đối tượng users
 
-            $http.get('/User/List').then(function (response) {
-                $scope.users = response.data;
+            $http.get('/User/List').then(function (response) { //Thực hiện lấy danh sách người dùng
+                $scope.users = response.data // thành công thì trả về dữ liệu gắn vào mảng đối tượng
             }, function (error) {
+                //Thông báo lỗi
                 console.error('Lỗi khi lấy dữ liệu người dùng:', error);
             });
         });
